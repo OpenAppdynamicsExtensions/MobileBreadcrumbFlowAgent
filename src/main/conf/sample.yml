@@ -1,0 +1,31 @@
+---
+loginConfig:
+  passwd: ""
+  user: ""
+  account: null
+  token: null
+  basicLogin: false
+apps:
+- appName: "NAME"
+  appKey: "AAA-DDD-EEE"
+  workflowInstances:
+  - flowName: "Test"
+    shouldLogTimeoutSessions: true
+    timeoutMs: 60000
+    startStates:
+    - "start"
+    endStates:
+    - "end2"
+    - "end"
+    errorStates:
+    - "ERROR"
+  - flowName: "Test"
+    shouldLogTimeoutSessions: true
+    timeoutMs: 60000
+    startStates:
+    - "start"
+    endStates:
+    - "end2"
+    - "end"
+    errorStates:
+    - "ERROR"

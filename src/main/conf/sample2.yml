@@ -1,0 +1,15 @@
+---
+loginConfig:
+  user: "TestSet"
+  passwd: ""
+  account: null
+  token: null
+workflowInstances:
+- flowName: "Test"
+  startStates:
+  - "start"
+  endStates:
+  - "end2"
+  - "end"
+  errorStates:
+  - "ERROR"

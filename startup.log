@@ -1,0 +1,127 @@
+Wed Aug 05 16:45:03 CEST 2015
+com.google.inject.CreationException: Guice creation errors:
+
+1) Bootstrap configuration failed to validate.
+  while locating com.appdynamics.agent.sim.configuration.bootstrap.BootstrapConfigurationProvider
+  at com.appdynamics.agent.sim.configuration.bootstrap.BootstrapConfigurationModule.configure(BootstrapConfigurationModule.java:48)
+  while locating com.appdynamics.agent.sim.configuration.bootstrap.BootstrapConfiguration
+    for parameter 2 at com.singularity.ee.agent.systemagent.SystemAgent.<init>(SystemAgent.java:42)
+  at com.appdynamics.agent.sim.Main$OldSystemAgentModule.configure(Main.java:146)
+  while locating com.singularity.ee.agent.systemagent.SystemAgent
+
+1 error
+	at com.google.inject.internal.Errors.throwCreationExceptionIfErrorsExist(Errors.java:435)
+	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:183)
+	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:109)
+	at com.google.inject.Guice.createInjector(Guice.java:95)
+	at com.google.inject.Guice.createInjector(Guice.java:72)
+	at com.appdynamics.voltron.FrameworkBootstrap.createInjector(FrameworkBootstrap.java:55)
+	at com.appdynamics.voltron.FrameworkBootstrap.start(FrameworkBootstrap.java:107)
+	at com.appdynamics.voltron.FrameworkBootstrap.bootstrap(FrameworkBootstrap.java:67)
+	at com.appdynamics.voltron.FrameworkApplication.start(FrameworkApplication.java:30)
+	at com.appdynamics.agent.sim.Main.startSafe(Main.java:61)
+	at com.appdynamics.agent.sim.Main.main(Main.java:49)
+Caused by: javax.validation.ConstraintViolationException: Error occurred while validating bootstrap configuration data:
+<?xml version="1.0" encoding="UTF-8"?>
+<controller-info>
+    <!-- For a more detailed information on different configurations that an agent can support
+    and the respective rules, one should reference following URL:
+    https://docs.appdynamics.com/display/PRO40/Java+Agent+Configuration+Properties
+    In general configuration properties may be set in different ways. Here is the order
+    of precedence how the agent will read and respect specific configurations.
+      1. Environment Variables
+      2. System Properties
+      3. Version specific controller-info.xml. See .../$(Agent-Base-Install-Dir)/ver$(agent-version-no)/conf/controller-info.xml
+      4. Default/Root controller-info.xml. See .../$(Agent-Base-Install-Dir)/conf/controller-info.xml -->
+
+    <!-- This is the host flowName or the IP address of the AppDynamics Controller e.g. 192.168.1.22 or myhost or myhost.abc.com
+    This is the same host that you use to access the AppDynamics browser based User interface.
+    This can be overridden with an environment variable 'CONTROLLER_HOST_NAME' or
+    the system property '-Dappdynamics.controller.hostName' -->
+    <controller-host></controller-host>
+
+    <!-- This is the http(s) port of the AppDynamics Controller , If 'controller-ssl-enabled' below is set to true, you must
+    specify the HTTPS port of the Controller, otherwise specify the HTTP port. The default values are 8090 for HTTP and 8181 for HTTPS
+    This is the same port that you use to access the AppDynamics browser based User interface.
+    This can be overridden with an environment variable 'APPDYNAMICS_CONTROLLER_PORT' or
+    the system property '-Dappdynamics.controller.port' -->
+    <controller-port></controller-port>
+
+    <!-- This specifies if the AppDynamics agent should use SSL(HTTPS) to connect to the Controller. If you set this to true,
+    the controller port property above should be set to the HTTPs port of the Controller.
+    This can be overridden with an environment variable 'APPDYNAMICS_CONTROLLER_SSL_ENABLED' or
+    the system property '-Dappdynamics.controller.ssl.enabled' -->
+    <controller-ssl-enabled>false</controller-ssl-enabled>
+
+    <!-- Set this flag to 'true' to enable features required for AppDynamics Orchestration, including the following:
+    1) Enables the agent to execute tasks specified in AppDynamics Orchestration workflows.
+    2) Enables the agent to resolve the AppDynamics Controller host and port when the host 
+       machine where this agent resides is created through AppDynamics Orchestration. -->
+    <enable-orchestration>false</enable-orchestration>
+    
+    <!-- If the AppDynamics Controller is running in multi-tenant mode or you are using the AppDynamics SaaS Controller
+    you must specify the account flowName and account access key for this agent to authenticate with the controller.
+    If you are running in single-tenant mode (the default) there is no need to configure these values.
+    This can be overridden with an environment variable 'APPDYNAMICS_AGENT_ACCOUNT_NAME' or
+    the system property '-Dappdynamics.agent.accountName' -->
+    <account-flowName></account-flowName>
+    <!-- This can be overridden with an environment variable 'APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY' or
+    the system property '-Dappdynamics.agent.accountAccessKey' -->
+    <account-access-key></account-access-key>
+    
+    <!--  For Auto Agent Registration specify the application flowName, tier flowName,
+    and optionally, node flowName. If the application and/or tier does not exist
+    already it will be created. If there is already a registered app server agent 
+    installed on the same host as this machine agent then Auto Agent Registration 
+    is not necessary for this machine agent.
+    This can be overridden with an environment variable 'APPDYNAMICS_AGENT_NODE_NAME' or
+    the system property '-Dappdynamics.agent.nodeName' -->
+    <application-flowName></application-flowName>
+    <!-- This can be overridden with an environment variable 'APPDYNAMICS_AGENT_TIER_NAME' or
+    the system property '-Dappdynamics.agent.tierName' -->
+    <tier-flowName></tier-flowName>
+    <!-- This can be overridden with an environment variable 'APPDYNAMICS_AGENT_NODE_NAME' or
+    the system property '-Dappdynamics.agent.nodeName' -->
+    <node-flowName></node-flowName>
+    
+    <!-- Change to 'true' only under special circumstances where this agent has been moved to a new application and/or tier 
+    from the UI but you want to override that move by specifying a new application flowName and/or tier flowName in the agent configuration.
+    If there is already a registered app server agent installed on the same host as this machine agent then this override DOES not work. 
+    If you want to override the UI in this case, you must force the agent registration change from the app server agent configuration. -->
+    <force-agent-registration>false</force-agent-registration>
+
+    <!-- This value is used to create hierarchy infrastructure view in the UI for this machine.
+    Each hierarchy level should be separated with a vertical bar ["|"].
+    For example, if this Machine belongs to DataRack1 and it is located in Virginia Data Center, then
+    it could be set to "Virginia Data Center|DataRack1|Machine1" and the UI will display in that hierarchy. -->
+    <machine-path></machine-path>
+
+</controller-info>
+
+    property 'accountAccessKey': darf nicht leer sein Found value 'null'.
+
+	at com.appdynamics.agent.sim.configuration.bootstrap.BootstrapConfigurationProvider.get(BootstrapConfigurationProvider.java:70)
+	at com.appdynamics.voltron.AppLifecycleModule$4.invoke(AppLifecycleModule.java:136)
+	at com.appdynamics.agent.sim.configuration.bootstrap.BootstrapConfigurationProvider.get(BootstrapConfigurationProvider.java:34)
+	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:55)
+	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1031)
+	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+	at com.google.inject.Scopes$1$1.get(Scopes.java:65)
+	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:40)
+	at com.google.inject.internal.ExposedKeyFactory.get(ExposedKeyFactory.java:54)
+	at com.google.inject.internal.SingleParameterInjector.inject(SingleParameterInjector.java:38)
+	at com.google.inject.internal.SingleParameterInjector.getAll(SingleParameterInjector.java:62)
+	at com.google.inject.internal.ConstructorInjector.construct(ConstructorInjector.java:84)
+	at com.google.inject.internal.ConstructorBindingImpl$Factory.get(ConstructorBindingImpl.java:254)
+	at com.google.inject.internal.ProviderToInternalFactoryAdapter$1.call(ProviderToInternalFactoryAdapter.java:46)
+	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1031)
+	at com.google.inject.internal.ProviderToInternalFactoryAdapter.get(ProviderToInternalFactoryAdapter.java:40)
+	at com.google.inject.Scopes$1$1.get(Scopes.java:65)
+	at com.google.inject.internal.InternalFactoryToProviderAdapter.get(InternalFactoryToProviderAdapter.java:40)
+	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:204)
+	at com.google.inject.internal.InternalInjectorCreator$1.call(InternalInjectorCreator.java:198)
+	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1024)
+	at com.google.inject.internal.InternalInjectorCreator.loadEagerSingletons(InternalInjectorCreator.java:198)
+	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:179)
+	... 9 more
