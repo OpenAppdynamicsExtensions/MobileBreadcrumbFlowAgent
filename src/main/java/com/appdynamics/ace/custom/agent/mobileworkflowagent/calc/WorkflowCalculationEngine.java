@@ -58,6 +58,10 @@ public class WorkflowCalculationEngine {
                 builder.withTokenAuth(loginCfg.getAccount(),loginCfg.getToken());
             }
 
+            if(loginCfg.isProxyEnabled()) {
+                builder.withProxy(loginCfg.getProxyHost(),loginCfg.getProxyPort());
+            }
+
             _adqlConnection = builder.build();
         } catch (URISyntaxException e) {
             _logger.error("Error while creating ADQL Client container.",e);

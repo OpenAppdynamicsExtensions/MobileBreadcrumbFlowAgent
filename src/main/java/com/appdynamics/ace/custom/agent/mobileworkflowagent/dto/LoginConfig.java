@@ -13,6 +13,26 @@ public class LoginConfig {
     private String _account;
     private String _token;
 
+    private String _proxyHost;
+
+    public String getProxyHost() {
+        return _proxyHost;
+    }
+
+    public void setProxyHost(String proxyHost) {
+        _proxyHost = proxyHost;
+    }
+
+    public int getProxyPort() {
+        return _proxyPort;
+    }
+
+    public void setProxyPort(int proxyPort) {
+        _proxyPort = proxyPort;
+    }
+
+    private int _proxyPort;
+
     public String getUrl() {
         return _url;
     }
@@ -70,5 +90,10 @@ public class LoginConfig {
     @JsonIgnore
     public boolean isBasicLogin() {
         return (_user!=null && _user.length()>0);
+    }
+
+    @JsonIgnore
+    public boolean isProxyEnabled() {
+        return _proxyHost!= null && _proxyHost.length()>0;
     }
 }

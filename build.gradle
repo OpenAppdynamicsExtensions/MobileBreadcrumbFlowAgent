@@ -42,7 +42,7 @@ dependencies {
     compile ("log4j:log4j:1.2.17")
     compile "com.appdynamics:machineagent:4.1.0"
     compile 'com.appdynamics.ace.cli:CommandFramework:+'
-    compile   'com.appdynamics.ace.adql:Client:+'
+    compile   'com.appdynamics.ace.adql:Client:0.3'
 
 
     //jackson
