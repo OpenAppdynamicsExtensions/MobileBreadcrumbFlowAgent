@@ -1,0 +1,14 @@
+
+.gradle/
+.gradletasknamecache
+.idea/
+*.iml
+build/
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+src/
+startNgrokSandbox.sh
+startSandbox.sh
+startup.log
