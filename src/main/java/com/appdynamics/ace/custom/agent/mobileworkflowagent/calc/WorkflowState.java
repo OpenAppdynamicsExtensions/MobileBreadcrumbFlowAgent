@@ -7,6 +7,11 @@ public class WorkflowState {
 
     private long _lastUpdate;
     private long _startTime;
+
+    public String getLastState() {
+        return _lastState;
+    }
+
     private String _lastState;
 
     public String getStartState() {

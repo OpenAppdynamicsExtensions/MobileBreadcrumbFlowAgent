@@ -261,6 +261,7 @@ public class WorkflowCalculationEngine {
                                     _logger.warn("Ignoring ERROR State, WF not started "+bcName+" ( "+data.getString("sessionguid")+")");
                                     break;
                                 case ACTIVE:
+                                    _metrics.reportErrorState(wf.getFlowName(),bcName);
                                     _metrics.reportErrorFlow(wf.getFlowName(),wfState.flowTime(bcTime));
                                     wfState.stop();
                                     break;
@@ -272,6 +273,7 @@ public class WorkflowCalculationEngine {
 
                         if (wfState.getState() == WorkflowState.State.ACTIVE) {
                             if (wfState.age(bcTime) > wf.getTimeoutMs()) {
+                                _metrics.reportTimeoutState(wf.getFlowName(),wfState.getLastState());
                                 _metrics.reportTimeoutFlow(wf.getFlowName(),wfState.age(bcTime));
                                 if (wf.isShouldLogTimeoutSessions()) {
                                     _logger.warn("Session with Timeout status on flow definition "+wf.getFlowName()
@@ -283,6 +285,7 @@ public class WorkflowCalculationEngine {
                         }
                     }
                     if(wfState.getState() == WorkflowState.State.ACTIVE) {
+                        _metrics.reportStaleState(wf.getFlowName(),wfState.getLastState());
                         _metrics.reportStaleFlow(wf.getFlowName(),wfState.age(data.getLong("endTimeMS")));
                         if (wf.isShouldLogTimeoutSessions()) {
                             _logger.warn("Session with stale status on flow definition "+wf.getFlowName()

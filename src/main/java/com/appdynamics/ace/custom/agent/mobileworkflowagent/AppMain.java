@@ -97,7 +97,8 @@ public class AppMain {
                 dumpMetrics(metrics);
                 _logger.debug("State:"+engine.getState());
             } catch (Throwable e) {
-                _logger.error("ERROR while testing :"+e);
+                _logger.error("ERROR while testing :"+e,e);
+
             }
 
             return 0;

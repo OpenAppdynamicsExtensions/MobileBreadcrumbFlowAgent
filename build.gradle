@@ -42,7 +42,7 @@ dependencies {
     compile ("log4j:log4j:1.2.17")
     compile "com.appdynamics:machineagent:4.1.0"
     compile 'com.appdynamics.ace.cli:CommandFramework:+'
-    compile   'com.appdynamics.ace.adql:Client:0.3'
+    compile   'com.appdynamics.ace.adql:Client:0.4.1'
 
 
     //jackson
@@ -54,11 +54,13 @@ dependencies {
     agentRuntime 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
     agentRuntime 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.6'
     agentRuntime 'org.apache.commons:commons-lang3:3.5'
-    agentRuntime   'com.appdynamics.ace.adql:Client:+'
+    agentRuntime   'com.appdynamics.ace.adql:Client:0.4.1'
 
 
 }
 
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
 
 generateMonitorXML {
     agentDescription = "DB Mobile Workflow Agent"
