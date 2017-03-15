@@ -30,6 +30,7 @@ public class WorkflowCalculationEngine {
     private static String queryTmpl = "SELECT sessionguid,appkey,eventTimestamp,endTimeMS,breadcrumb,closed " +
             " FROM mobile_session_record " +
             " WHERE appkey='%%APPKEY%%' " +
+            " AND mobileappname='%%APPNAME%%'" +
             " AND closed = true " +
             " AND endTimeMS>%%START%% " +
             " AND endTimeMS<%%END%%";
@@ -92,7 +93,7 @@ public class WorkflowCalculationEngine {
         for (ApplicationInstance app : _cfg.getApps()) {
             _logger.debug("Collecting from App :"+app.getAppKey());
 
-            String query = buildQueryString(app.getAppKey(),startDate,endDate);
+            String query = buildQueryString(app.getAppKey(),app.getAppName(),startDate,endDate);
 
             MetricHolder holder = new MetricHolder(app.getAppName());
             ADQLDelegate delegate = new ADQLDelegate(holder, app);
@@ -128,13 +129,15 @@ public class WorkflowCalculationEngine {
         return metrics;
     }
 
-    private String buildQueryString(String appKey,Date startDate, Date endDate) {
+    private String buildQueryString(String appKey, String appName, Date startDate, Date endDate) {
 
 
         String query = queryTmpl;
         query = query.replaceAll("%%APPKEY%%",appKey);
+        query = query.replaceAll("%%APPNAME%%",appName);
         query = query.replaceAll("%%START%%",Long.toString(startDate.getTime()));
         query = query.replaceAll("%%END%%",Long.toString(endDate.getTime()));
+
         _logger.debug("QueryString :"+query);
         return query;
 
